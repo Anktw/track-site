@@ -8,8 +8,15 @@ A simple computer vision project that detects, tracks and counts people crossing
 </p>
 
 ## Process Pipeline
-
-![System Pipeline](screenshots/pipeline.png)
+```mermaid
+flowchart TD
+    A[Video Input] --> B[YOLOv8 Detection]
+    B --> C[ByteTrack Tracking]
+    C --> D[Line Crossing Logic]
+    D --> E[Entry Counting]
+    E --> F[Analytics Video Overlay]
+    F --> G[Output Video]
+```
 
 
 ## Features
