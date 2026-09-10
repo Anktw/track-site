@@ -237,3 +237,4 @@ I would test upward and downward transitions, no movement, repeated frames at th
 ### 50. What are the next useful extensions for this project?
 
 Useful extensions include separate entry and exit counts, configurable polygonal regions, live camera support, a REST API, dashboard analytics, event timestamps, database storage, model performance monitoring, and deployment on edge devices.
+
