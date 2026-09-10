@@ -1,5 +1,9 @@
 
+The system uses YOLOv8 for object detection, ByteTrack for tracking and a custom line-crossing logic to count entries.
+
+
 ## ▶️ Usage
+
 
 Place your input video inside the video folder and run the script:
 

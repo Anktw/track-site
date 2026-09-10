@@ -1,15 +1,11 @@
 
-# YOLOv8 Line Crossing People Counter
+# Track-Site
 
 A simple computer vision project that detects, tracks and counts people crossing a virtual line in a video stream.
-The system uses YOLOv8 for object detection, ByteTrack for tracking and a custom line-crossing logic to count entries.
-
-## Demo
 
 <p align="center">
   <img src="screenshots/demo.gif" width="700">
 </p>
-
 
 ## Process Pipeline
 
@@ -43,9 +39,24 @@ The overlay includes:
 - entry counter
 - camera information
 
-## Technologies Used
+## Setup
+clone this repository and install the required dependencies:
 
-    - YOLOv8 (Ultralytics)
-    - OpenCV
-    - PyTorch
-    - ByteTrack
+```bash
+git clone https://github.com/anktw/track-site.git
+cd track-site
+```
+
+Install the required dependencies after setting up a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Run the main script with the following command:
+
+```bash
+python track_site.py
+```
