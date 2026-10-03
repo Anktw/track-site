@@ -51,15 +51,22 @@ line_y = height // 2
 
 os.makedirs("output", exist_ok=True)
 
+# Four Character Code.
 fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+# Create an MP4 video with this filename, codec, FPS and resolution.
 out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
 # tracking memory for y coordinates with track_id as a key, and previous_cy as values
+# track_id → previous centroid Y
 previous_positions = {}
-
+"""
+Person ID 1 previously had y = 350
+Person ID 2 previously had y = 420
+Person ID 5 previously had y = 290
+"""
 # counting
-count = 0
-counted_ids = set()
+count = 0 #no of enteries
+counted_ids = set() # already counted
 
 
 # =========================
@@ -67,7 +74,7 @@ counted_ids = set()
 # =========================
 
 while True: 
-    ret, frame = cap.read()
+    ret, frame = cap.read() # read one frame
     if not ret:
         break
     
@@ -83,19 +90,19 @@ while True:
     # ---- Top CCTV header ----
     cv2.putText(frame, camera_id, (10,25),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                (255,255,255), 1)
+                (255,255,255), 1) #cameda_id
 
     cv2.putText(frame, timestamp, (width-260,25),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                (255,255,255), 1)
+                (255,255,255), 1) #timestamp
 
     cv2.putText(frame, f"FPS {fps:.1f}", (width-100,55),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                (255,255,255), 1)
+                (255,255,255), 1) #fps
 
 
     # YOLO + tracking
-    results = model.track(frame, persist=True)
+    results = model.track(frame, persist=True) #detect + track
 
 
     # Create overlay for transparent counting line
@@ -117,6 +124,7 @@ while True:
 
     # Blend overlay with original frame
     alpha_line = 0.3
+    # αA+(1−α)B
     frame = cv2.addWeighted(line_overlay, alpha_line, frame, 1-alpha_line, 0)
 
     
@@ -129,15 +137,15 @@ while True:
             if box.id is None:
                 continue
 
-            cls = int(box.cls[0])
+            cls = int(box.cls[0]) # cls == 0 -> person
 
             if cls != 0:
-                continue
+                continue #if not a person
 
             track_id = int(box.id[0])
 
             x1, y1, x2, y2 = map(int, box.xyxy[0])
-
+            # calculate centroid
             cx = (x1 + x2) // 2
             cy = (y1 + y2) // 2
 
